@@ -21,22 +21,22 @@ public class DetailActivity extends ActionBarActivity {
 
         // My Code....also worked but not that great
         /**Get the intent and message
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(Intent.EXTRA_TEXT);
-        TextView textMessage = findViewById(R.id.detail_text);
+         Intent intent = getIntent();
+         String message = intent.getStringExtra(Intent.EXTRA_TEXT);
+         TextView textMessage = findViewById(R.id.detail_text);
 
-        //create a textview
-        textMessage.setText(message);
+         //create a textview
+         textMessage.setText(message);
 
-        //set textView as the main window
-        setContentView(textMessage);
-        */
+         //set textView as the main window
+         setContentView(textMessage);
+         */
 
 
         if (savedInstanceState == null) {
-           getSupportFragmentManager().beginTransaction()
-                   .add(R.id.container, new DetailFragment())
-                   .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new DetailFragment())
+                    .commit();
         }
     }
 
@@ -57,7 +57,8 @@ public class DetailActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(settingsIntent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -74,7 +75,7 @@ public class DetailActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-                // The detail Activity called via intent.
+            // The detail Activity called via intent.
             Intent intent = getActivity().getIntent();
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
                 String forecastStr = intent.getStringExtra(Intent.EXTRA_TEXT);
