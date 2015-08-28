@@ -158,7 +158,17 @@ public class ForecastFragment extends Fragment {
         /**
          * Prepare the weather high/lows for presentation.
          */
-        private String formatHighLows(double high, double low) {
+        private String formatHighLows(double high, double low, String degreeUnits) {
+
+            if (degreeUnits.equals(getString(R.string.pref_units_fahrenheitchosen))){
+                high = high * 1.8 + 32;
+                low = low * 1.8 + 32;
+
+            }
+            else if (!degreeUnits.equals(getString(R.string.pref_units_celsiuschosen))){
+                Log.d(LOG_TAG, "Invalid Unit : " + degreeUnits);
+
+            }
             // For presentation, assume the user doesn't care about tenths of a degree.
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
@@ -227,13 +237,36 @@ public class ForecastFragment extends Fragment {
                 JSONObject weatherObject = dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
                 description = weatherObject.getString(OWM_DESCRIPTION);
 
+                //setup preference object to detect whether celsius or fahrenheit has been selected
+                SharedPreferences degreesPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                String degreesUnits = degreesPref.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_celsiuschosen));
+
+
                 // Temperatures are in a child object called "temp".  Try not to name variables
                 // "temp" when working with temperature.  It confuses everybody.
                 JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
+
                 double high = temperatureObject.getDouble(OWM_MAX);
                 double low = temperatureObject.getDouble(OWM_MIN);
 
-                highAndLow = formatHighLows(high, low);
+                /**
+                double high;
+                double low;
+
+                if (degreesUnits.equals(getString(R.string.pref_units_celsiuschosen))){
+                    high = temperatureObject.getDouble(OWM_MAX);
+                    low = temperatureObject.getDouble(OWM_MIN);
+
+                }
+                else if{
+                    double highTemp = temperatureObject.getDouble(OWM_MAX);
+                    high = highTemp * (9/5) + 32;
+                    double lowTemp = temperatureObject.getDouble(OWM_MIN);
+                    low = lowTemp * (9/5) + 32;
+                }
+                 */
+
+                highAndLow = formatHighLows(high, low, degreesUnits);
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
 
             }
@@ -274,7 +307,7 @@ public class ForecastFragment extends Fragment {
                 //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=44720&mode=json&units=metric&cnt=7");
 
                 final String FORECAST_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
-                final String QUERY_PARAM = "q";
+                final String QUERY_PARAM = "zip";
                 final String FORMAT_PARAM = "mode";
                 final String UNITS_PARAM = "units";
                 final String DAYS_PARAM = "cnt";

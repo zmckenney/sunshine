@@ -5,9 +5,18 @@
     <string name="title_activity_detail">Details</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="pref_units_celsius">Celsius</string>
+    <string name="pref_units_fahrenheit">Fahrenheit</string>
+    <string name="pref_units_dialogtitle">Temperature Units</string>
+
+    <string name="pref_units_celsiuschosen">celsius</string>
+    <string name="pref_units_fahrenheitchosen">fahrenheit</string>
 
 
     <string name="pref_location_label">Location</string>
     <string name="pref_location_key" translatable="false">location</string>
     <string name="pref_location_default" translatable="false">44720</string>
+
+    <string name="pref_units_label">Units</string>
+    <string name="pref_units_key" translatable="false">units</string>
 </resources>
