@@ -74,9 +74,11 @@ public class ForecastFragment extends Fragment {
         switch (id) {
             case R.id.action_refresh:
                 updateWeather();
+                break;
 
             case R.id.action_map :
                 showMap();
+                break;
 
         }
 /**
