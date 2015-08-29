@@ -70,50 +70,22 @@ public class ForecastFragment extends Fragment {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_refresh:
-                updateWeather();
-                break;
-
-            case R.id.action_map :
-                showMap();
-                break;
-
-        }
-/**
         if (id == R.id.action_refresh){
             updateWeather();
 
             return true;
         }
- */
+
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void showMap() {
-        Uri uri = Uri.parse("geo:0,0?q=" + getLoc());
-        //String geoLocation = getLoc();
-        //Uri parsed = Uri.parse(geoLocation);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(uri);
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-           startActivity(intent);
-        }
-    }
-
-
-    private String getLoc () {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String loc = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
-        return loc;
-    }
 
     private void updateWeather() {
         FetchWeatherTask weatherTask = new FetchWeatherTask();
-        String locate = getLoc();
-        weatherTask.execute(locate);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String loc = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        weatherTask.execute(loc);
     }
 
     @Override
