@@ -117,7 +117,6 @@ public class ForecastFragment extends Fragment {
                 //How I wrote it (and works)
                 //String forecast = weekForecast.get(i);
 
-                //How they wrote it...calling the adapter instead of the weekForecast array is better?
                 String forecast = mForecastAdapter.getItem(i);
                 Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
 
@@ -282,6 +281,7 @@ public class ForecastFragment extends Fragment {
 
             //If there arent any params then theres nothing to do so null
             if (params.length == 0) {
+                Log.v(LOG_TAG, "doInBackground Params are null");
                 return null;
             }
 
@@ -305,7 +305,7 @@ public class ForecastFragment extends Fragment {
                 // http://openweathermap.org/API#forecast
 
                 //              STATIC CODE BELOW - NEED TO MAKE IT AN INPUT
-                //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=44720&mode=json&units=metric&cnt=7");
+                //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?zip=44720&mode=json&units=metric&cnt=7");
 
                 final String FORECAST_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
                 final String QUERY_PARAM = "zip";
@@ -322,6 +322,7 @@ public class ForecastFragment extends Fragment {
 
 
                 URL url = new URL(builtURI.toString());
+                //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?zip=44720&mode=json&units=metric&cnt=7");
 
                 Log.v(LOG_TAG, "Built URI: " + builtURI.toString());
 
@@ -354,6 +355,7 @@ public class ForecastFragment extends Fragment {
                 }
 
                 forecastJsonStr = buffer.toString();
+                Log.v(LOG_TAG, "JSON string is : " + forecastJsonStr);
 
             } catch (IOException e) {
                 Log.e("PlaceholderFragment", "Error ", e);
